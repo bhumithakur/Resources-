@@ -1,0 +1,41 @@
+// Time Based Key-Value Store
+class TimeMap {
+public:
+     unordered_map<string,vector<pair<int,string>>> mpp;
+    
+    string find(vector<pair<int,string>> &v, int timestamp){
+        int  lo=0,high=v.size()-1;
+        string ans="";
+        while(lo<=high){
+            int mid=lo+(high-lo)/2;
+            if(v[mid].first<=timestamp){
+                if(v[mid].first==timestamp){
+                    return v[mid].second;
+                }
+                ans=v[mid].second;
+                lo=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+        }
+        return ans;
+    }
+    
+    TimeMap() {
+        
+    }
+    
+    void set(string key, string value, int timestamp) {
+        mpp[key].push_back({timestamp,value});
+    }
+    
+    string get(string key, int timestamp) {
+        if(mpp.find(key)==mpp.end()){
+            return "";
+        }
+        string ans=find(mpp[key],timestamp);
+        return ans;
+    }
+   
+};
